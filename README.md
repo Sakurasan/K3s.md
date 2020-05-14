@@ -1,5 +1,6 @@
 # K3s 手记
-
+![基本架构](image/k3s1.png)
+![安装方式](image/k3s2.png)
 
 ## docker环境
 ```
@@ -46,3 +47,11 @@ sudo chmod +r /etc/rancher/k3s/k3s.yaml
 ``
 sudo cat /var/lib/rancher/k3s/server/node-token
 ``
+
+
+# 使用场景
+![云边协作](image/k3s3.png)
+![案例](image/k3s4.png)
+![前景](image/k3s5.png)
+![Edge](image/k3s6.png)
+![架构](image/k3s7.png)
