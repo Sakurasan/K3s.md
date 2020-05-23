@@ -12,6 +12,12 @@ sudo usermod -aG docker ubuntu
 ```
 docker run -d -v /data/docker/rancher-server/var/lib/rancher/:/var/lib/rancher/ --restart=unless-stopped --name rancher-server -p 180:80 -p 1443:443 rancher/rancher:stable
 ```
+## pause
+```
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1 && \
+docker tag da86e6ba6ca1 k8s.gcr.io/pause:3.1
+```
+
 ## 安装k3s
 ```
 wget https://github.com/rancher/k3s/releases/download/v1.17.5%2Bk3s1/k3s
@@ -55,3 +61,12 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 ![前景](image/k3s5.png)
 ![Edge](image/k3s6.png)
 ![架构](image/k3s7.png)
+
+## 参考文档
+[你的第一次轻量级K8S体验 —— 记一次Rancher 2.2 + K3S集成部署过程](https://blog.ilemonrain.com/docker/rancher-with-k3s.html)
+
+[轻松玩转K3S多点部署 —— Rancher 2.2 + K3S多点/集群部署教程](https://blog.ilemonrain.com/docker/rancher-with-k3s-multideploy.html)
+
+[部署k3s高可用集群(实验性)](http://willgeek.com/archives/232/) http://willgeek.com/archives/232/
+
+[k3s-轻量级Kubernetes上手](https://dyllanwli.github.io/2019/03/09/k3s-%E8%BD%BB%E9%87%8F%E7%BA%A7Kubernetes%E4%B8%8A%E6%89%8B/)
