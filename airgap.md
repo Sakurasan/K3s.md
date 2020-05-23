@@ -67,3 +67,5 @@ k3s agent -s ${YOUR_SERVER_IP} -t ${NODE_TOKEN}
 https://abser.top/index.php/2019/11/28/k3s-by-rancher-%c2%b7-%e8%af%ad%e9%9b%80/
 
 https://www.yuque.com/dimension/shu93f/k3sbyrancher
+
+[K3S生产案例分享：逾百台工控机的应用实践](https://www.freesion.com/article/4741181333/)
