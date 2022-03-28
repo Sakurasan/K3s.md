@@ -1,60 +1,66 @@
+[toc]
+
 # K3s 手记
 ![基本架构](image/k3s1.png)
 ![安装方式](image/k3s2.png)
 
+- 目录：
+    - [快速上手](README.md##安装k3s)
+    - [离线安装](airgap.md)
+    - [wireguard] todo
+    - [高可用] todo
+
+---
 ## docker环境
 ```
 sudo apt-get install docker-ce 
 
 sudo usermod -aG docker ubuntu
 ```
-## 安装rancher
+## ~~安装rancher~~ 非必须
 ```
 docker run -d -v /data/docker/rancher-server/var/lib/rancher/:/var/lib/rancher/ --restart=unless-stopped --name rancher-server -p 180:80 -p 1443:443 rancher/rancher:stable
 ```
-## pause
-```
-docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1 && \
-docker tag da86e6ba6ca1 k8s.gcr.io/pause:3.1
-```
+
 
 ## 安装k3s
+### K3s server: 
 ```
-wget https://github.com/rancher/k3s/releases/download/v1.17.5%2Bk3s1/k3s
+## 国内环境
+curl -sfL http://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_KUBECONFIG_OUTPUT=/root/.kube/config sh -
 
-# 备用 
-# wget http://cloud.emmmmmm.org/k3s
+> 默认使用containerd作为容器运行时,使用docker添加: INSTALL_K3S_EXEC="--docker"
+> .kube文件cp到其他用户下方便使用，0644 
 
-chmod +x k3s 
-sudo mv k3s /usr/local/bin/
-
-docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1 && \
-docker tag da86e6ba6ca1 k8s.gcr.io/pause:3.1
-
-
-# 一键梭哈
-curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -
-
-sudo chmod 666 /etc/rancher/k3s/k3s.yaml
-
-sudo vim /etc/systemd/system/multi-user.target.wants/k3s.service
-# 增加docker
-> server --docker --no-deploy traefik \
-
+> docker 方法2
+sudo vim /etc/systemd/system/k3s.service
+修改成:
+    server --docker --no-deploy traefik \ 
+    使用docker,禁用traefik
 systemctl daemon-reload
 
 service k3s restart
-
-sudo chmod +r /etc/rancher/k3s/k3s.yaml
-
 ```
 
-## 获取token
+获取token
+
 ``
-sudo cat /var/lib/rancher/k3s/server/node-token
+sudo cat /var/lib/rancher/k3s/server/token
 ``
 
+### K3s agent:
+```
+curl -sfL http://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn \
+K3S_URL=https://192.168.99.211:6443 \
+K3S_TOKEN=9077b8e6f3b67b5f3e4a7723a96b199d \
+sh -
+```
 
+## 卸载k3s
+```
+k3s-uninstall.sh
+k3s-uninstall-agent.sh
+```
 # 使用场景
 ![云边协作](image/k3s3.png)
 ![案例](image/k3s4.png)
