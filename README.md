@@ -1,11 +1,10 @@
-[toc]
 
 # K3s 手记
 ![基本架构](image/k3s1.png)
 ![安装方式](image/k3s2.png)
 
 - 目录：
-    - [快速上手](README.md##安装k3s)
+    - [快速上手](README.md#安装k3s)
     - [离线安装](airgap.md)
     - [wireguard] todo
     - [高可用] todo
