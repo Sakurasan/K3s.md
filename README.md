@@ -28,6 +28,9 @@ docker run -d -v /data/docker/rancher-server/var/lib/rancher/:/var/lib/rancher/ 
 ## 国内环境
 curl -sfL http://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_KUBECONFIG_OUTPUT=/root/.kube/config sh -
 
+> 不指定KUBECONFIG须声明文件位置，不然kubectl,helm 无法访问k8s
+    - export KUBECONFIG=/etc/rancher/k3s/k3s.yaml 
+    - kubectl --kubeconfig /etc/rancher/k3s/k3s.yaml get pods --all-namespaces
 > 默认使用containerd作为容器运行时,使用docker添加: INSTALL_K3S_EXEC="--docker"
 > .kube文件cp到其他用户下方便使用，0644 
 
@@ -59,6 +62,9 @@ sh -
 ```
 k3s-uninstall.sh
 k3s-uninstall-agent.sh
+
+docker stop $(docker ps -a|grep k8s |awk '{print $1}')
+docker rm $(docker ps -a|grep k8s |awk '{print $1}')
 ```
 # 使用场景
 ![云边协作](image/k3s3.png)
